@@ -17,8 +17,56 @@
 // Genom att använda React Context kan du skapa en tät koppling mellan
 // ColorSelector och ColorDisplay utan att direkt skicka props eller använda callbacks.
 
+import React, { createContext, useState, useContext } from "react";
+
+const ColorContext = createContext();
+
+function ColorSelector() {
+  const [selectedColor, setSelectedColor] = useState("");
+  const { setColor } = useContext(ColorContext);
+
+  const handleChange = (e) => {
+    const color = e.target.value;
+    setSelectedColor(color);
+    setColor(color);
+  };
+
+  return (
+    <div>
+      <h2>Choose your favourite colour:</h2>
+      <select onChange={handleChange} value={selectedColor}>
+        <option value="Red">Red</option>
+        <option value="Blue">Blue</option>
+        <option value="Green">Green</option>
+        <option value="Yellow">Yellow</option>
+      </select>
+    </div>
+  );
+}
+
+function ColorDisplay() {
+  const { color } = useContext(ColorContext);
+
+  return (
+    <div>
+      <div
+        style={{ width: "100px", height: "100px", backgroundColor: color }}
+      ></div>
+    </div>
+  );
+}
+
 function App() {
-  return <div></div>;
+  const [color, setColor] = useState("red");
+
+  return (
+    <ColorContext.Provider value={{ color, setColor }}>
+      <div>
+        <ColorSelector />
+        <ColorDisplay />
+      </div>
+    </ColorContext.Provider>
+  );
 }
 
 export default App;

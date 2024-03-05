@@ -14,3 +14,21 @@
 // AnswerComponent: Ska visa ett inputfält och en knapp för att svara
 // på frågan. När svaret skickas, ska det också lagras i Redux store och visas
 // under inputfältet.
+
+import { Provider } from "react-redux";
+import store from "./store";
+import QuestionComponent from "./QuestionComponent";
+import AnswerComponent from "./AnswerComponent";
+
+function App() {
+  return (
+    <Provider store={store}>
+      <div>
+        <QuestionComponent />
+        <AnswerComponent />
+      </div>
+    </Provider>
+  );
+}
+
+export default App;
